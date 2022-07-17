@@ -1,0 +1,35 @@
+server:
+  port: 9191
+
+spring:
+  application:
+    name: API-GATEWAY
+
+  cloud:
+    gateway:
+      routes:
+      - id: USER-SERVICE
+        uri: lb://USER-SERVICE
+        predicates:
+          - Path=/its-login/**
+      - id: ADMIN-SERVICE
+        uri: lb://ADMIN-SERVICE
+        predicates:
+          - Path=/admin/**
+      - id: Tech-SERVICE
+        uri: lb://TECH-SERVICE
+        predicates:
+          - Path=/tech/**
+      - id: HR-SERVICE
+        uri: lb://HR-SERVICE
+        predicates:
+          - Path=/hr/**
+          
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    hostname: localhost
+    instance-id: ${spring.application.name}:${random.uuid}    
